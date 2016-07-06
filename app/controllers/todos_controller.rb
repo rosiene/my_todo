@@ -1,4 +1,5 @@
 class TodosController < ApplicationController
+  before_action :set_todo, only: [:show, :update, :destroy]
 
   # GET /todos
   def index
@@ -10,23 +11,19 @@ class TodosController < ApplicationController
   def create
     @todo = Todo.new(todo_params)
 
-    respond_to do |format|
-      if @todo.save
-        format.json { render :show, status: :created, location: @todo}
-      else
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
-      end
+    if @todo.save
+      render json: @todo, status: :created, location: @todo
+    else
+      render json: @todo.errors, status: :unprocessable_entity
     end
   end
 
   # PUT /todos/1
   def update
-    respond_to do |format|
-      if @todo.update(todo_params)
-        format.json { render :show, status: :ok, location: @todo }
-      else
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
-      end
+    if @todo.update(todo_params)
+      render json: @todo, status: :ok, location: @todo
+    else
+      render json: @todo.errors, status: :unprocessable_entity
     end
   end
 
