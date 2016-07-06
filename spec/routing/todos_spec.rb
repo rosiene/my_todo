@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TodosController, type: :routing do
+describe TodosController do
   describe "routing" do
 
     it "routes to todos" do
