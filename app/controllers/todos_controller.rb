@@ -1,10 +1,8 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: [:show, :update, :destroy]
-
+  before_action :set_todo, only: [:update, :destroy]
   # GET /todos
   def index
-    @todos = Todo.all
-    render json: @todos
+    render json: Todo.order(:description)
   end
 
   # POST /todos
@@ -30,12 +28,13 @@ class TodosController < ApplicationController
   # DELETE /todos/1
   def destroy
     @todo.destroy
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
+    def set_todo
+      @todo = Todo.find(params[:id])
+    end
 
     def todo_params
       params.require(:todo).permit(:description, :completed)
