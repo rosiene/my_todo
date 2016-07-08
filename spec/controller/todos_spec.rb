@@ -10,5 +10,17 @@ describe TodosController, :type => :controller do
       post :create, :todo => {description: 'Test', completed: false}, format: 'json'
     end
 
+    it "update todos json" do
+      todo = Todo.create(description: "Test", completed: false)
+      todo.save
+      put :update, :id => todo.id, :todo => {completed: true}, format: 'json'
+    end
+  
+    it "delete todos json" do
+      todo = Todo.create(description: "Test", completed: false)
+      todo.save
+      delete :destroy, :id => todo.id, format: 'json'
+    end
+
   end
 end

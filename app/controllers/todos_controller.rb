@@ -1,5 +1,6 @@
 class TodosController < ApplicationController
   before_action :set_todo, only: [:update, :destroy]
+  
   # GET /todos
   def index
     render json: Todo.order(:description)
